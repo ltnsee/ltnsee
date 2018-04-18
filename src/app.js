@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './index.css';
-import './index.scss';
+import 'font-awesome/css/font-awesome.min.css';
+
+import './style/index.css';
+import './style/index.scss';
 
 class HelloMessage extends React.Component {
     render() {
       return (
         <div>
+          <i className="fa-address-book-o"></i>
           Hello {this.props.name}
         </div>
       );

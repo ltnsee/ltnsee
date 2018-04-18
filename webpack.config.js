@@ -2,19 +2,18 @@
  * 
  */
 const path =require('path');
+const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
-const extractSass = new ExtractTextPlugin({
-    filename: "index.css",
-    disable: process.env.NODE_ENV === "development"
-});
+const PurifyCssWebpack = require('purifycss-webpack');
+const glob = require('glob');
 
 module.exports = {
     entry: './src/app.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js'
+        filename: 'script/bundle.js'
     },
     module: {
         rules: [
@@ -31,16 +30,36 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                  fallback: "style-loader",
-                  use: "css-loader"
+                    fallback: 'style-loader',
+                    use: ["css-loader"],
+                    publicPath:'../'
                 })
             },
             {
                 test: /\.scss$/,
                 use: ExtractTextPlugin.extract({
                     fallback: "style-loader",
-                    use: ["css-loader","sass-loader"]
+                    use: ["css-loader","sass-loader"],
+                    publicPath:'../'
                 })
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 50,
+                        outputPath: 'images'
+                        // name: 'images/[name].[ext]'
+                    }  
+                }]
+            },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2|otf)$/,
+                loader: 'file-loader',
+                options: {
+                    name: 'resource/[name].[ext]'
+                }
             }
         ]
     },
@@ -49,6 +68,21 @@ module.exports = {
             hash:true,
             template:'./src/index.html'
         }),
-        new ExtractTextPlugin({filename: "index.css",})
-    ]
+        new CleanWebpackPlugin('[dist]'),
+        new ExtractTextPlugin("style/index.css"),
+        new PurifyCssWebpack({
+            paths:glob.sync(path.join(__dirname, 'src/*.html'))//配置扫描的路径，将没有用的css删除
+        })
+    ],
+    // optimization: {
+    //     splitChunks: {
+    //         cacheGroups: {
+    //             commons: {
+    //                 name: "commons",
+    //                 chunks: "initial",
+    //                 minChunks: 2
+    //             }
+    //         }
+    //     }
+    // },
 }
