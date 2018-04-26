@@ -1,23 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter as Router, Switch, Route, Redirect, Link} from 'react-router-dom';
 
-import 'font-awesome/css/font-awesome.min.css';
+// import 'font-awesome/css/font-awesome.min.css';
 
-import './style/index.css';
-import './style/index.scss';
+// import './style/index.css';
+// import './style/index.scss';
+import Layout from 'component/layout/index.js'
+import Home from 'page/home/index.js';
 
-class HelloMessage extends React.Component {
+
+class App extends React.Component {
     render() {
       return (
-        <div>
-          <i className="fa-address-book-o"></i>
-          Hello {this.props.name}
-        </div>
+        <Router>
+          <Layout>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Redirect from="*" to="/" />
+            </Switch>
+          </Layout>
+        </Router>
       );
     }
   }
   
   ReactDOM.render(
-    <HelloMessage name="Taylor" />,
+    <App />,
     document.getElementById('app')
   );

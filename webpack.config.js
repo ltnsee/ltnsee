@@ -13,7 +13,14 @@ module.exports = {
     entry: './src/app.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
+        // publicPath:'/diat/',
         filename: 'script/bundle.js'
+    },
+    resolve: {
+        alias: {
+            page: path.resolve(__dirname, 'src/page'),
+            component: path.resolve(__dirname, 'src/component')
+        }
     },
     module: {
         rules: [
@@ -27,6 +34,10 @@ module.exports = {
                     }
                 }
             },
+            // {
+            //     test: /\.css$/,
+            //     use: ["style-loader", "css-loader"]
+            // },
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
@@ -56,10 +67,16 @@ module.exports = {
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2|otf)$/,
-                loader: 'file-loader',
-                options: {
-                    name: 'resource/[name].[ext]'
-                }
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        name: 'resource/[name].[ext]'
+                    } 
+                    // loader: 'file-loader',
+                    // options: {
+                    //     name: 'resource/[name].[ext]'
+                    // } 
+                }]
             }
         ]
     },
@@ -70,10 +87,13 @@ module.exports = {
         }),
         new CleanWebpackPlugin('[dist]'),
         new ExtractTextPlugin("style/index.css"),
-        new PurifyCssWebpack({
-            paths:glob.sync(path.join(__dirname, 'src/*.html'))//配置扫描的路径，将没有用的css删除
-        })
+        // new PurifyCssWebpack({
+        //     paths:glob.sync(path.join(__dirname, 'src/*.html'))//配置扫描的路径，将没有用的css删除
+        // })
     ],
+    devServer: {
+        port: 3000
+    }
     // optimization: {
     //     splitChunks: {
     //         cacheGroups: {
