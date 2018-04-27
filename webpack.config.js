@@ -83,6 +83,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             hash:true,
+            favicon: './favicon.ico',
             template:'./src/index.html'
         }),
         new CleanWebpackPlugin('[dist]'),
