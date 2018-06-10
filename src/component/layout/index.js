@@ -12,7 +12,7 @@ class Layout extends React.Component{
 
         return (
             <div id="wrapper">
-                <NavTop />
+                <NavTop {...this.props}/>
                 <NavSide />
                 {this.props.children}
             </div>

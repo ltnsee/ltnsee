@@ -12,14 +12,27 @@ class NavSide extends React.Component{
                 <div className="sidebar-collapse">
                     <ul className="nav">
                         <li>
-                            <NavLink exact to="/" activeClassName="active-menu">
+                            <NavLink exact to="/home" activeClassName="active-menu">
                                 <i className="fa fa-dashboard"></i>
                                 首页
                             </NavLink>
                         </li>
                         <li className="active">
+                            <Link to="/user">
+                                <i className="fa fa-user-o"></i>
+                                用户
+                                <span className="fa arrow"></span>
+                                
+                            </Link>
+                            <ul className="nav nav-second-level collapse in">
+                                <li>
+                                    <NavLink to="/user"  activeClassName="active-menu">用户管理</NavLink>
+                                </li>
+                            </ul>
+                        </li>
+                        <li className="active">
                             <Link to="/product">
-                                <i className="fa fa-sitemap"></i>
+                                <i className="fa fa-list"></i>
                                 商品
                                 <span className="fa arrow"></span>
                                 
@@ -35,7 +48,7 @@ class NavSide extends React.Component{
                         </li>
                         <li className="active">
                             <Link to="/order">
-                                <i className="fa fa-sitemap"></i>
+                                <i className="fa fa-check-square-o"></i>
                                 订单
                                 <span className="fa arrow"></span>
                                 
@@ -43,19 +56,6 @@ class NavSide extends React.Component{
                             <ul className="nav nav-second-level collapse in">
                                 <li>
                                     <NavLink to="/order" activeClassName="active-menu">订单管理</NavLink>
-                                </li>
-                            </ul>
-                        </li>
-                        <li className="active">
-                            <Link to="/user">
-                                <i className="fa fa-sitemap"></i>
-                                用户
-                                <span className="fa arrow"></span>
-                                
-                            </Link>
-                            <ul className="nav nav-second-level collapse in">
-                                <li>
-                                    <NavLink to="/user"  activeClassName="active-menu">用户管理</NavLink>
                                 </li>
                             </ul>
                         </li>
